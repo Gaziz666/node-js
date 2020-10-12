@@ -1,28 +1,26 @@
 const DB = require('../../db');
-const TABLE_NAME = 'Users';
+const TABLE_NAME = 'Boards';
 
 const getAll = async () => {
-  // TODO: mock implementation. should be replaced during task development
   return DB.getAllEntities(TABLE_NAME);
 };
 
-const get = async id => {
-  const user = await DB.getEntities(TABLE_NAME, id);
-
-  if (!user) {
-    throw new Error(`couldn't find user with id ${id}`);
-  }
-
-  return user;
+const create = async board => {
+  return DB.addUser(TABLE_NAME, board);
 };
 
-const create = async user => {
-  return DB.addUser(TABLE_NAME, user);
+const get = async id => {
+  const board = await DB.getEntities(TABLE_NAME, id);
+
+  if (!board) {
+    throw new Error(`couldn't find board with id ${id}`);
+  }
+
+  return board;
 };
 
 const update = async (id, body) => {
   const user = await DB.getEntities(TABLE_NAME, id);
-
   if (!user) {
     throw new Error(`couldn't find user with id ${id}`);
   }
@@ -34,10 +32,17 @@ const del = async id => {
   const user = await DB.getEntities(TABLE_NAME, id);
 
   if (!user) {
-    throw new Error(`couldn't find user with id ${id}`);
+    return '404';
+    // throw new Error(`couldn't find user with id ${id}`);
   }
-
+  console.log(id, user);
   await DB.del(TABLE_NAME, user);
 };
 
-module.exports = { getAll, get, create, update, del };
+module.exports = {
+  getAll,
+  create,
+  get,
+  update,
+  del
+};

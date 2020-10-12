@@ -24,12 +24,15 @@ router.route('/:id').put(async (req, res) => {
 });
 
 router.route('/:id').delete(async (req, res) => {
-  const result = await usersService.del(req.params.id);
-  if (result === '404') {
-    console.log('404');
-    res.sendStatus(404);
-  }
+  await usersService.del(req.params.id);
   res.sendStatus(200);
+  /*
+  try {
+    await usersService.del(req.params.id);
+    res.sendStatus(200);
+  } catch (error) {
+    res.sendStatus(204);
+  }*/
 });
 
 module.exports = router;
